@@ -427,7 +427,9 @@ func defaultModInfo(rc *RemoteCache, importPath string) (modPath string, err err
 	cmd.Dir = rc.tmpDir
 	cmd.Env = env
 	_, err = cmd.Output()
-	log.Printf("lookup package %q took %s\n", importPath, time.Since(goGetBegin).Round(10*time.Millisecond))
+
+	wd, _ := os.Getwd()
+	log.Printf("%s: lookup package %q took %s\n", wd, importPath, time.Since(goGetBegin).Round(10*time.Millisecond))
 	if err != nil {
 		return "", err
 	}
